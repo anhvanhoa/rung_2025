@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\C_Database;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.db');
+Route::view("/", "pages.dashboard")->name("dashboard");
+
+Route::prefix("db")->controller(C_Database::class)->group(function () {
+    Route::get("processing", "processing")->name("db.processing");
 });
