@@ -17,10 +17,6 @@ class CreateBusinessSuppliersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('business_id');
             $table->unsignedBigInteger('supplier_id');
-            $table->unsignedBigInteger('beerd_id');
-            $table->unsignedBigInteger('quantity');
-            $table->unsignedBigInteger('price');
-            $table->string('year');
             $table->timestamps();
         });
     }

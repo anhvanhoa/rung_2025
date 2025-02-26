@@ -1,70 +1,72 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start rtl:justify-end">
-                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
-                    type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                    <span class="sr-only">Open sidebar</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path clip-rule="evenodd" fill-rule="evenodd"
-                            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-                        </path>
-                    </svg>
+<header class="app-topbar">
+    <div class="page-container topbar-menu">
+        <div class="d-flex align-items-center gap-2">
+
+            <a href="#" class="logo">
+                <span class="logo-light">
+                    <span class="logo-lg"><img src="assets/images/logo.png" alt="logo"></span>
+                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
+                </span>
+
+                <span class="logo-dark">
+                    <span class="logo-lg"><img src="assets/images/logo-dark.png" alt="dark logo"></span>
+                    <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="small logo"></span>
+                </span>
+            </a>
+
+            <button class="sidenav-toggle-button px-2">
+                <i class="ri-menu-2-line fs-24"></i>
+            </button>
+
+            <button class="topnav-toggle-button px-2" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+                <i class="ri-menu-2-line fs-24"></i>
+            </button>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <div class="topbar-item d-sm-flex">
+                <button class="topbar-link" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                    type="button">
+                    <i data-lucide="settings" class="fs-22"></i>
                 </button>
-                <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
-                    <span
-                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
-                </a>
             </div>
-            <div class="flex items-center">
-                <div class="flex items-center ms-3">
-                    <div>
-                        <button type="button" data-dropdown-offset-skidding="-70" data-dropdown-offset-distance="15"
-                            class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                            aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                            <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                        </button>
-                    </div>
-                    <div class="border border-gray-200 z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-xl dark:bg-gray-700 dark:divide-gray-600"
-                        id="dropdown-user">
-                        <div class="px-4 py-3" role="none">
-                            <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                Neil Sims
-                            </p>
-                            <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                neil.sims@flowbite.com
-                            </p>
+            <div class="topbar-item d-sm-flex">
+                <button class="topbar-link" id="light-dark-mode" type="button">
+                    <i data-lucide="moon" class="light-mode-icon fs-22"></i>
+                    <i data-lucide="sun" class="dark-mode-icon fs-22"></i>
+                </button>
+            </div>
+            <div class="topbar-item nav-user">
+                <div class="dropdown">
+                    <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown"
+                        data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
+                        <img src="assets/images/logo-sm.png"
+                            width="32" height="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                        <span class="d-lg-flex flex-column gap-1 d-none">
+                            <span class="fw-semibold">abc</span>
+                        </span>
+                        <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <div class="dropdown-header noti-title">
+                            <h4 class="text-overflow m-0 text-center"><span
+                                    class="badge bg-danger rounded-pill"></span>
+                            </h4>
                         </div>
-                        <ul class="py-1" role="none">
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Earnings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Sign out</a>
-                            </li>
-                        </ul>
+
+                        <a href="#" class="dropdown-item">
+                            <i class="ri-account-circle-line me-1 fs-16 align-middle"></i>
+                            <span class="align-middle">a</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item fw-semibold text-danger">
+                            <i data-lucide="log-out" class="me-1 fs-16 align-middle"></i>
+                            <span class="align-middle">
+                                Đăng xuất
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</nav>
+</header>

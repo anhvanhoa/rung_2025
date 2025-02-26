@@ -18,4 +18,7 @@ Route::view("/", "pages.dashboard")->name("dashboard");
 
 Route::prefix("db")->controller(C_Database::class)->group(function () {
     Route::get("processing", "processing")->name("db.processing");
+    Route::get("processing-data", "processingData")->name("db.processing-data");
+    Route::get("processing/add", "getProcessingAdd")->name("db.processing.add");
+    Route::post("processing/add", "postProcessingAdd")->name("db.processing.post-add");
 });

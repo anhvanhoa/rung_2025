@@ -16,8 +16,8 @@ class CreateDistrictsTable extends Migration
         Schema::create('districts', function (Blueprint $table) {
             $table->string("code")->primary();
             $table->string("name");
-            $table->integer("longitude");
-            $table->integer("latitude");
+            $table->float("longitude");
+            $table->float("latitude");
             $table->timestamps();
         });
     }

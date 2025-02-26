@@ -15,9 +15,6 @@ class CreateBusinessSourcesTable extends Migration
     {
         Schema::create('business_sources', function (Blueprint $table) {
             $table->id();
-            $table->integer('total');
-            $table->integer('price');
-            $table->string('year');
             $table->foreignId('business_id')->constrained()->onDelete('cascade');
             $table->foreignId('source_id')->constrained()->onDelete('cascade');
             $table->timestamps();

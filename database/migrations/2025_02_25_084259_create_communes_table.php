@@ -16,8 +16,8 @@ class CreateCommunesTable extends Migration
         Schema::create('communes', function (Blueprint $table) {
             $table->string("code")->primary();
             $table->string("name");
-            $table->integer("longitude");
-            $table->integer("latitude");
+            $table->float("longitude");
+            $table->float("latitude");
             $table->string("district_code");
             $table->foreign("district_code")->references("code")->on("districts")->onDelete("cascade");
             $table->timestamps();

@@ -17,9 +17,6 @@ class CreateBreedsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->enum('type', ['seed', 'tree']);
-            $table->text('characteristic');
-            $table->text('advantage');
-            $table->text('disadvantage');
             $table->timestamps();
         });
     }
