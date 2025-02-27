@@ -52,7 +52,7 @@
                             </a>
                         </li>
                         <li class="side-nav-item">
-                            <a href="pages-pricing.html" class="side-nav-link">
+                            <a href="{{route('db.breed')}}" class="side-nav-link">
                                 <span class="menu-text">
                                     Sản xuất giống
                                 </span>

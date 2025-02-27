@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Supplier extends Model
+class Garden extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id',
-        'name',
+        'business_id',
+        'acreage',
+        'type',
     ];
-
-    public function businesses()
-    {
-        return $this->belongsToMany(Business::class, 'business_suppliers');
-    }
 }

@@ -16,7 +16,9 @@ class CreateBusinessSuppliersTable extends Migration
         Schema::create('business_suppliers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('business_id');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             $table->unsignedBigInteger('supplier_id');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->timestamps();
         });
     }

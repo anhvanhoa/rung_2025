@@ -18,12 +18,13 @@ class CreateBusinessesTable extends Migration
             $table->string('name');
             $table->string('business_registration')->nullable();
             $table->string('tax_code')->nullable();
-            $table->integer('annual_revenue')->nullable();
+            $table->bigInteger('annual_revenue')->nullable();
             $table->integer('average_consumption')->nullable();
             $table->integer('workers_no_qual')->nullable();
             $table->integer('workers_deg')->nullable();
             $table->integer('female_workers')->nullable();
             $table->integer('male_workers')->nullable();
+            $table->integer('sell_trees_qty')->nullable(); // số lượng cây bán ra cây lâm nghiệp
             $table->enum('type', ['processing', 'manufacture'])->default("processing");
             $table->float("longitude")->nullable();
             $table->float("latitude")->nullable();

@@ -17,8 +17,26 @@ use Illuminate\Support\Facades\Route;
 Route::view("/", "pages.dashboard")->name("dashboard");
 
 Route::prefix("db")->controller(C_Database::class)->group(function () {
-    Route::get("processing", "processing")->name("db.processing");
-    Route::get("processing-data", "processingData")->name("db.processing-data");
-    Route::get("processing/add", "getProcessingAdd")->name("db.processing.add");
-    Route::post("processing/add", "postProcessingAdd")->name("db.processing.post-add");
+    Route::group(["prefix" => "processing"], function () {
+        Route::get("", "processing")->name("db.processing");
+        Route::get("data", "processingData")->name("db.processing-data");
+        Route::get("add", "getProcessingAdd")->name("db.processing.add");
+        Route::post("add", "postProcessingAdd")->name("db.processing.post-add");
+        Route::get("edit/{id}", "getProcessingEdit")->name("db.processing.edit");
+        Route::post("edit/{id}", "postProcessingEdit")->name("db.processing.post-edit");
+        Route::get("delete/{id}", "getProcessingDelete")->name("db.processing.delete");
+        Route::get("export/excel", "exportProcesExcel")->name("db.processing.export-excel");
+        Route::get("export/pdf", "exportProcesPdf")->name("db.processing.export-pdf");
+    });
+    Route::group(["prefix" => "breed"], function () {
+        Route::get("", "breed")->name("db.breed");
+        Route::get("data", "breedData")->name("db.breed-data");
+        Route::get("add", "getBreedAdd")->name("db.breed.add");
+        Route::post("add", "postBreedAdd")->name("db.breed.post-add");
+        Route::get("edit/{id}", "getBreedEdit")->name("db.breed.edit");
+        Route::post("edit/{id}", "postBreedEdit")->name("db.breed.post-edit");
+        Route::get("delete/{id}", "getBreedDelete")->name("db.breed.delete");
+        Route::get("export/excel", "exportBreedExcel")->name("db.breed.export-excel");
+        // Route::get("export/pdf", "exportProcesPdf")->name("db.processing.export-pdf");
+    });
 });

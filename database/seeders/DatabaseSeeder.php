@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +25,8 @@ class DatabaseSeeder extends Seeder
             BusinessSourceSeed::class,
             BusinessBusinessFormSeeder::class,
             BreedSeed::class,
+            SupplierSeed::class,
+            TechnologySeed::class,
         ]);
     }
 }

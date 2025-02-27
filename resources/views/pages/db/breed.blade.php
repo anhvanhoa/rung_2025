@@ -13,11 +13,11 @@
                 <div class="card">
                     <div class="card-header border-bottom border-dashed d-flex flex-wrap align-items-center gap-2">
                         <div class="flex-grow-1">
-                            <h4 class="header-title">Cơ sở chế biến gỗ</h4>
+                            <h4 class="header-title">Cơ sở sản xuất giống</h4>
                         </div>
 
                         <div class="d-flex flex-wrap flex-lg-nowrap gap-2">
-                            <a href="{{route('db.processing.add')}}" class="btn btn-sm btn-primary">
+                            <a href="{{route('db.breed.add')}}" class="btn btn-sm btn-primary">
                                 <i class="ri-add-line me-1"></i>
                                 Thêm mới
                             </a>
@@ -35,33 +35,19 @@
                         </div>
                     </div>
 
-                    {{-- <div
-                        class="card-header border-bottom border-dashed d-flex flex-wrap align-items-center gap-2  justify-content-end">
-                        <div class="d-flex flex-wrap flex-lg-nowrap gap-2">
-                            <div class="row gy-2 gx-1 align-items-center">
-                                <div class="col-auto" style="align-self: end;">
-                                    <button type="button" id="filter" class="btn btn-sm btn-info">
-                                        <i class="ri-filter-line me-2"></i>
-                                        Lọc dữ liệu
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                     <div class="card-body">
                         <table class="table table-hover dt-responsive nowrap w-100 fixed-header-datatable">
                             <thead>
                                 <tr>
-                                    <th>Tên cơ sở chế biến</th>
+                                    <th>Tên cơ sở</th>
                                     <th>Người đại diện</th>
                                     <th>Số đăng ký</th>
                                     <th>Loại hình cơ sở</th>
                                     <th>Điện thoại</th>
                                     <th>Quận/Huyện</th>
                                     <th>Xã/Phường</th>
-                                    <th>Tổng KL tiêu thụ (m<sup>3</sup>)</th>
-                                    <th>Nguồn gốc</th>
+                                    <th>SL bán ra KD cây Lâm Nghiệp</th>
+                                    <th>Nguồn cung</th>
                                     <th>Tổng số LD</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -84,10 +70,10 @@
     <script src="assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
     <script>
         const loadData = async () => {
-            const response = await getData('GET', '{{ route('db.processing-data') }}', {},
+            const response = await getData('GET', '{{ route('db.breed-data') }}', {},
                 @json(csrf_token()));
             return response;
         }
     </script>
-    <script src="/pages/js/db-processing.js"></script>
+    <script src="/pages/js/db-breed.js"></script>
 @endsection
