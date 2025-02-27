@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             BreedSeed::class,
             SupplierSeed::class,
             TechnologySeed::class,
+            UserSeed::class,
         ]);
     }
 }

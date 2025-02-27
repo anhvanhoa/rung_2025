@@ -16,29 +16,62 @@ class DistrictSeed extends Seeder
     {
         DB::table('districts')->insert([
             [
-                'code' => 'D001',
-                'name' => 'District 1',
-                'longitude' => 123456,
-                'latitude' => 654321,
+                'code' => 'H001',
+                'name' => 'Ba Vì',
+                'longitude' => 105.4231,
+                'latitude' => 21.1391,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'code' => 'D002',
-                'name' => 'District 2',
-                'longitude' => 123457,
-                'latitude' => 654322,
+                'code' => 'H002',
+                'name' => 'Đan Phượng',
+                'longitude' => 105.6782,
+                'latitude' => 21.0817,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'code' => 'D003',
-                'name' => 'District 3',
-                'longitude' => 123458,
-                'latitude' => 654323,
+                'code' => 'H003',
+                'name' => 'Hoài Đức',
+                'longitude' => 105.7324,
+                'latitude' => 20.9981,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            [
+                'code' => 'H004',
+                'name' => 'Mê Linh',
+                'longitude' => 105.7103,
+                'latitude' => 21.1796,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'code' => 'H006',
+                'name' => 'Thạch Thất',
+                'longitude' => 105.5502,
+                'latitude' => 20.9964,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'code' => 'H007',
+                'name' => 'Thanh Trì',
+                'longitude' => 105.8372,
+                'latitude' => 20.9025,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'code' => 'H008',
+                'name' => 'Ứng Hòa',
+                'longitude' => 105.7834,
+                'latitude' => 20.6815,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
+
     }
 }

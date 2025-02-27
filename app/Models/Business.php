@@ -57,7 +57,7 @@ class Business extends Model
 
     public function primaryTrees()
     {
-        return $this->hasMany(BusinessBreed::class, 'business_id');
+        return $this->belongsToMany(Breed::class, 'business_breeds');
     }
 
     public function irrigation()

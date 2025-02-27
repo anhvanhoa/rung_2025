@@ -17,7 +17,7 @@ class PeopleSeed extends Seeder
         DB::table('people')->insert([
             [
                 'id' => 1,
-                'name' => 'Nguyễn Văn A',
+                'name' => 'Phạm Thế Dương',
                 'phone' => '123-456-7890',
                 'gender' => 'male',
                 'date_of_birth' => '1990-01-01',

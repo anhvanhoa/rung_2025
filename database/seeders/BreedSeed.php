@@ -16,21 +16,37 @@ class BreedSeed extends Seeder
     {
         DB::table('breeds')->insert([
             [
-                'name' => 'SEED 1',
-                'type' => 'seed'
-            ],
-            [
-                'name' => 'TREE 2',
+                'name' => 'Cam Sành',
                 'type' => 'tree'
             ],
             [
-                'name' => 'SEED 3',
+                'name' => 'Xoài Cát Hòa Lộc',
+                'type' => 'tree'
+            ],
+            [
+                'name' => 'Lúa Jasmine 85',
                 'type' => 'seed'
             ],
             [
-                'name' => 'TREE 4',
+                'name' => 'Dưa Hấu Không Hạt',
+                'type' => 'seed'
+            ],
+            [
+                'name' => 'Chôm Chôm Java',
                 'type' => 'tree'
             ],
+            [
+                'name' => 'Ớt Chỉ Thiên',
+                'type' => 'seed'
+            ],
+            [
+                'name' => 'Mãng Cầu Xiêm',
+                'type' => 'tree'
+            ],
+            [
+                'name' => 'Lúa OM5451',
+                'type' => 'seed'
+            ]
         ]);
     }
 }

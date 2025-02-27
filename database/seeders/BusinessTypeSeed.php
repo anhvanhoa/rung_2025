@@ -17,8 +17,12 @@ class BusinessTypeSeed extends Seeder
         DB::table('business_types')->insert([
             ['name' => 'Doanh nghiệp vừa và nhỏ'],
             ['name' => 'Cá nhân, hộ kinh doanh cá thể'],
-            ['name' => 'Manufacturing'],
-            ['name' => 'Service'],
+            ['name' => 'Công ty TNHH một thành viên'],
+            ['name' => 'Công ty TNHH hai thành viên trở lên'],
+            ['name' => 'Công ty cổ phần'],
+            ['name' => 'Doanh nghiệp tư nhân'],
+            ['name' => 'Hợp tác xã'],
+            ['name' => 'Công ty có vốn đầu tư nước ngoài'],
         ]);
     }
 }

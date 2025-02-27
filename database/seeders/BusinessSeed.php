@@ -29,7 +29,7 @@ class BusinessSeed extends Seeder
                 'longitude' => 123456,
                 'latitude' => 654321,
                 'business_type_id' => 1, // Ensure this business_type_id exists in the business_types table
-                'commune_code' => 'C001', // Ensure this commune_code exists in the communes table
+                'commune_code' => 'X002', // Ensure this commune_code exists in the communes table
                 'owner_id' => 1, // Ensure this owner_id exists in the people table
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -48,7 +48,7 @@ class BusinessSeed extends Seeder
                 'longitude' => 654321,
                 'latitude' => 123456,
                 'business_type_id' => 2, // Ensure this business_type_id exists in the business_types table
-                'commune_code' => 'C002', // Ensure this commune_code exists in the communes table
+                'commune_code' => 'X008', // Ensure this commune_code exists in the communes table
                 'owner_id' => 2, // Ensure this owner_id exists in the people table
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -16,20 +16,29 @@ class SupplierSeed extends Seeder
     {
         DB::table('suppliers')->insert([
             [
-                'name' => 'Nhà cung cấp 1'
+                'name' => 'Công ty giống'
             ],
             [
-                'name' => 'Nhà cung cấp 2'
+                'name' => 'Thu mua từ người dân'
             ],
             [
-                'name' => 'Nhà cung cấp 3'
+                'name' => 'Thu hái từ rừng giống'
             ],
             [
-                'name' => 'Nhà cung cấp 4'
+                'name' => 'Vườn giống'
             ],
             [
-                'name' => 'Nhà cung cấp 5'
+                'name' => 'Tự sản xuất'
             ],
+            [
+                'name' => 'Các loài lan trong nước'
+            ],
+            [
+                'name' => 'Trong nước'
+            ],
+            [
+                'name' => 'Nhập khẩu'
+            ]
         ]);
     }
 }

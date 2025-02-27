@@ -17,16 +17,19 @@
     <div data-simplebar>
         <ul class="side-nav">
             <li class="side-nav-item">
-                <a href="/" class="side-nav-link">
-                    <span class="menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                <a href="{{route('dashboard')}}" class="side-nav-link">
+                    <span class="menu-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" data-lucide="airplay"
                             class="lucide lucide-airplay">
                             <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
                             <path d="m12 15 5 6H7Z"></path>
-                        </svg></span>
-                    <span class="menu-text"> Dashboard </span>
-                    <span class="badge bg-danger rounded">3</span>
+                        </svg>
+                    </span>
+                    <span class="menu-text">
+                        Tổng quan
+                    </span>
                 </a>
             </li>
             <li class="side-nav-item">

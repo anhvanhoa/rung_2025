@@ -28,26 +28,59 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{route('db.processing.export-excel')}}">Xuất excel</a></li>
-                                    <li><a class="dropdown-item" href="{{route('db.processing.export-pdf')}}">Xuất PDF</a></li>
+                                    <li><a class="dropdown-item" href="{{route('db.processing.export-excel')}}">Xuất
+                                            excel</a></li>
+                                    <li><a class="dropdown-item" href="{{route('db.processing.export-pdf')}}">Xuất PDF</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-                    {{-- <div
-                        class="card-header border-bottom border-dashed d-flex flex-wrap align-items-center gap-2  justify-content-end">
-                        <div class="d-flex flex-wrap flex-lg-nowrap gap-2">
-                            <div class="row gy-2 gx-1 align-items-center">
-                                <div class="col-auto" style="align-self: end;">
-                                    <button type="button" id="filter" class="btn btn-sm btn-info">
-                                        <i class="ri-filter-line me-2"></i>
-                                        Lọc dữ liệu
-                                    </button>
+                    <div class="card-header border-bottom border-dashed">
+                        <div class="row gy-2 gx-1 align-items-center">
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="form-label">Loại hình cơ sở</label>
+                                <div class="SumoSelect">
+                                    <select class="form-control form-control-sm sumoSelect" multiple="" id="business_type"
+                                        name="business_type[]">
+                                        @foreach($businessTypes as $b)
+                                            <option value="{{$b->id}}" selected>{{$b->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="form-label">Quận/Huyện</label>
+                                <div class="SumoSelect">
+                                    <select class="form-control form-control-sm sumoSelect" id="district" name="district">
+                                        <option value="" hidden style="pointer-events: none;">
+                                            -- Chọn quận/huyện --
+                                        </option>
+                                        @foreach($districts as $d)
+                                            <option value="{{$d->code}}">{{$d->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="form-label">Xã/Phường</label>
+                                <div class="SumoSelect">
+                                    <select class="form-control form-control-sm sumoSelect" id="commune" name="commune">
+                                        @foreach($communes as $c)
+                                            <option value="{{$c->id}}">{{$c->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-auto" style="align-self: end;">
+                                <button type="button" id="filter" class="btn btn-sm btn-info">
+                                    <i class="ri-filter-line me-2"></i>
+                                    Lọc dữ liệu
+                                </button>
+                            </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="card-body">
                         <table class="table table-hover dt-responsive nowrap w-100 fixed-header-datatable">
@@ -83,11 +116,30 @@
     <script src="assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
     <script src="assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
     <script>
-        const loadData = async () => {
-            const response = await getData('GET', '{{ route('db.processing-data') }}', {},
+        const loadData = async (param = {}) => {
+            const response = await getData('GET', '{{ route('db.processing-data') }}', param,
                 @json(csrf_token()));
             return response;
         }
+        const renderSelect = (el, data, district) => {
+            destroySumoSelect(el)
+            const res = data.filter(i => i.district_code == district)
+            el.html("")
+            el.append(`<option value="" hidden> -- Chọn xã/phường --</option>`)
+            res.forEach(i => el.append(`<option value="${i.code}">${i.name}</option>`))
+            initSumoSelect(el, 'Vui lòng chọn')
+        }
+
+        $(document).ready(function () {
+            {
+                const val = $("#district").val();
+                renderSelect($("#commune"), @json($communes), val)
+            }
+        });
+
+        $("#district").on("change", function () {
+            renderSelect($("#commune"), @json($communes), $(this).val())
+        })
     </script>
     <script src="/pages/js/db-processing.js"></script>
 @endsection

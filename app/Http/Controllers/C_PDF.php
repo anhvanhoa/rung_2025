@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class C_PDF extends Controller
 {
-    public function exportPdf(array $header, array $data, string $title, string $folder, string $fileName, array $alignment_width)
+    public function exportPdf(array $header, array $data, string $title, string $folder, string $fileName, array $alignment_width, string $orientation = 'P')
     {
         // Kiểm tra và tạo thư mục nếu chưa tồn tại
         $folderPath = public_path($folder);
@@ -15,8 +15,8 @@ class C_PDF extends Controller
             File::makeDirectory($folderPath, 0755, true);
         }
 
-        // Tạo đối tượng Mpdf
-        $mpdf = new Mpdf();
+        // Tạo đối tượng Mpdf với chế độ xoay trang
+        $mpdf = new Mpdf(['orientation' => $orientation]);
 
         // Thêm tiêu đề
         $html = '<h2 style="text-align: center;">' . $title . '</h2>';

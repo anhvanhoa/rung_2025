@@ -28,10 +28,17 @@ class C_Database extends Controller
 {
     public function processing()
     {
-        return view("pages.db.processing");
+        $businessTypes = BusinessType::all();
+        $districts = District::all();
+        $communes = Commune::all();
+        return view("pages.db.processing", [
+            "businessTypes" => $businessTypes,
+            'districts' => $districts,
+            'communes' => $communes
+        ]);
     }
 
-    public function processingData()
+    public function processingData(Request $req)
     {
         $data = Business::with("commune.district")
             ->with("businessType")
@@ -40,7 +47,16 @@ class C_Database extends Controller
             ->with("owner")
             ->with("sources.source")
             ->where("type", Business::TYPE_PROCESSING)
-            ->get();
+            // commune and district
+            ->when($req->district, function ($query, $district) {
+                return $query->whereHas("commune", function ($q) use ($district) {
+                    $q->where("district_code", $district);
+                });
+            })
+            ->when($req->commune, function ($query, $commune) {
+                return $query->where("commune_code", $commune);
+            })
+            ->whereIn("business_type_id", $req->business_type)->get();
         return $this->renderProcess($data);
     }
 
@@ -296,8 +312,8 @@ class C_Database extends Controller
                 $total,
                 $item->workers_deg,
                 $item->workers_no_qual,
-                $item->sources->map(function ($source) {
-                    return $source->source->name;
+                $item->primaryTrees->map(function ($tree) {
+                    return $tree->name;
                 })->implode(", ")
             ];
         });
@@ -385,8 +401,8 @@ class C_Database extends Controller
                 $total,
                 $item->workers_deg,
                 $item->workers_no_qual,
-                $item->sources->map(function ($source) {
-                    return $source->source->name;
+                $item->primaryTrees->map(function ($tree) {
+                    return $tree->name;
                 })->implode(", ")
             ];
         })->toArray();
@@ -415,13 +431,20 @@ class C_Database extends Controller
         $fileName = "processing.pdf";
 
         $controller = new C_PDF();
-        $controller->exportPdf($header, $dataPdf, "Cơ sở chế biến gỗ", $folder, $fileName, $alignment_width);
+        $controller->exportPdf($header, $dataPdf, "Cơ sở chế biến gỗ", $folder, $fileName, $alignment_width, 'L');
         return response()->download("$folder/$fileName");
     }
 
     public function breed()
     {
-        return view("pages.db.breed");
+        $businessTypes = BusinessType::all();
+        $districts = District::all();
+        $communes = Commune::all();
+        return view("pages.db.breed", [
+            "businessTypes" => $businessTypes,
+            'districts' => $districts,
+            'communes' => $communes
+        ]);
     }
     public function getBreedAdd()
     {
@@ -492,7 +515,7 @@ class C_Database extends Controller
         }
     }
 
-    public function breedData()
+    public function breedData(Request $req)
     {
         $data = Business::with("commune.district")
             ->with("businessType")
@@ -504,7 +527,15 @@ class C_Database extends Controller
             ->with("garden")
             ->with("irrigation")
             ->where("type", Business::TYPE_MANUFACTRUE)
-            ->get();
+            ->when($req->district, function ($query, $district) {
+                return $query->whereHas("commune", function ($q) use ($district) {
+                    $q->where("district_code", $district);
+                });
+            })
+            ->when($req->commune, function ($query, $commune) {
+                return $query->where("commune_code", $commune);
+            })
+            ->whereIn("business_type_id", $req->business_type)->get();
         return $this->renderBreed($data);
     }
 
@@ -662,11 +693,16 @@ class C_Database extends Controller
             "Quận/Huyện",
             "Loại hình kinh doanh",
             "Số lượng cây giống bán ra đối với cở sở kinh doanh giống cây Lâm Nghiệp (Vạn cây)",
+            "Doanh thu hàng năm",
             "Nguồn cung cấp hạt giống, cây giống",
             "Tổng số lao động",
             "Lao động nữ",
             "Lao động nam",
-            "Các loại gỗ sử dụng chính",
+            "Các loại giống chính",
+            "Côn nghệ vườn ươm",
+            "Hệ thống tưới tiêu",
+            "Diện tích (m2)",
+            "Loại hình vườn ươm",
         ];
 
         $data = Business::with("commune.district")
@@ -701,14 +737,21 @@ class C_Database extends Controller
                 $item->commune->district->code,
                 $item->commune->district->name,
                 $item->businessType->name,
+                $item->sell_trees_qty,
                 $item->annual_revenue,
                 $suppliers,
                 $total,
                 $item->female_workers,
                 $item->male_workers,
-                $item->sources->map(function ($source) {
-                    return $source->source->name;
-                })->implode(", ")
+                $item->primaryTrees->map(function ($tree) {
+                    return $tree->name;
+                })->implode(", "),
+                $item->nurseries->map(function ($nursery) {
+                    return $nursery->name;
+                })->implode(", "),
+                $item->irrigation->first()->name,
+                $item->garden->acreage,
+                Garden::getValueType($item->garden->type)
             ];
         });
         $alignment_width = [
@@ -726,6 +769,7 @@ class C_Database extends Controller
             ['left', 25],    // Quận/Huyện
             ['left', 30],    // Loại hình kinh doanh
             ['right', 40],   // Tổng khối lượng Gỗ sử dụng, tiêu thụ bình quân hàng năm
+            ['left', 50],    // Doanh thu
             ['left', 50],    // Nguồn gốc gỗ
             ['right', 18],   // Tổng số lao động
             ['right', 18],   // Lao động có bằng cấp
@@ -733,7 +777,115 @@ class C_Database extends Controller
             ['left', 50],    // Các loại gỗ sử dụng chính
         ];
 
-        $path = (new C_Excel)->export($header, $dataExcel, "processing", "processing", [1], [], [], $alignment_width);
+        $path = (new C_Excel)->export($header, $dataExcel, "breed", "breed", [1], [], [], $alignment_width);
         return redirect($path);
+    }
+
+    public function exportBreedPdf()
+    {
+        $header = [
+            "STT",
+            "X",
+            "Y",
+            "Tên doanh nghiệp, cá nhân, tổ chức khác",
+            "Loại hình cơ sở",
+            "Người đại diện",
+            "Đăng ký KD",
+            "Số điện thoại",
+            "Mã Xã/Phường",
+            "Xã/Phường",
+            "Mã Quận/Huyện",
+            "Quận/Huyện",
+            "Loại hình kinh doanh",
+            "Số lượng cây giống bán ra đối với cở sở kinh doanh giống cây Lâm Nghiệp (Vạn cây)",
+            "Doanh thu hàng năm",
+            "Nguồn cung cấp hạt giống, cây giống",
+            "Tổng số lao động",
+            "Lao động nữ",
+            "Lao động nam",
+            "Các loại giống chính",
+            "Côn nghệ vườn ươm",
+            "Hệ thống tưới tiêu",
+            "Diện tích (m2)",
+            "Loại hình vườn ươm",
+        ];
+
+        $data = Business::with("commune.district")
+            ->with("businessType")
+            ->with("businessForms")
+            ->with("suppliers")
+            ->with("owner")
+            ->with("primaryTrees")
+            ->with("nurseries")
+            ->with("garden")
+            ->with("irrigation")
+            ->where("type", Business::TYPE_MANUFACTRUE)
+            ->get();
+
+        $dataPdf = $data->map(function ($item, $i) {
+            $i += 1;
+            $total = $item->female_workers + $item->male_workers;
+            $suppliers = $item->suppliers->map(function ($s) {
+                return $s->name;
+            })->implode(", ");
+            return [
+                $i,
+                $item->longitude,
+                $item->latitude,
+                $item->name,
+                $item->businessType->name,
+                $item->owner->name,
+                $item->business_registration,
+                $item->owner->phone,
+                $item->commune->code,
+                $item->commune->name,
+                $item->commune->district->code,
+                $item->commune->district->name,
+                $item->businessType->name,
+                $item->sell_trees_qty,
+                $item->annual_revenue,
+                $suppliers,
+                $total,
+                $item->female_workers,
+                $item->male_workers,
+                $item->primaryTrees->map(function ($tree) {
+                    return $tree->name;
+                })->implode(", "),
+                $item->nurseries->map(function ($nursery) {
+                    return $nursery->name;
+                })->implode(", "),
+                $item->irrigation->first()->name,
+                $item->garden->acreage,
+                Garden::getValueType($item->garden->type)
+            ];
+        })->toArray();
+        $alignment_width = [
+            ['center', 8],   // STT
+            ['center', 8],   // STT
+            ['center', 8],   // STT
+            ['left', 40],    // Tên doanh nghiệp, cá nhân, tổ chức khác
+            ['left', 30],    // Loại hình cơ sở
+            ['left', 32],    // Người đại diện
+            ['left', 20],    // Đăng ký KD
+            ['center', 16],  // Số điện thoại
+            ['center', 12],  // Mã Xã/Phường
+            ['left', 25],    // Xã/Phường
+            ['center', 12],  // Mã Quận/Huyện
+            ['left', 25],    // Quận/Huyện
+            ['left', 30],    // Loại hình kinh doanh
+            ['right', 40],   // Tổng khối lượng Gỗ sử dụng, tiêu thụ bình quân hàng năm
+            ['left', 50],    // Doanh thu
+            ['left', 50],    // Nguồn gốc gỗ
+            ['right', 18],   // Tổng số lao động
+            ['right', 18],   // Lao động có bằng cấp
+            ['right', 18],   // Lao động phổ thông
+            ['left', 50],    // Các loại gỗ sử dụng chính
+        ];
+
+        $folder = "breed";
+        $fileName = "breed.pdf";
+        $controller = new C_PDF();
+        $controller->exportPdf($header, $dataPdf, "Cơ sở sản xuất giống", $folder, $fileName, $alignment_width, 'L');
+        return response()->download("$folder/$fileName");
     }
 }

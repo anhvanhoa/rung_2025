@@ -10,4 +10,6 @@ class BusinessBreed extends Model
     use HasFactory;
 
     protected $fillable = ["business_id", "breed_id"];
+
+    
 }
